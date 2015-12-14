@@ -1,4 +1,4 @@
-package p.minn.cas.shiro.web;
+package p.minn.security.cas.springsecurity.web;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -26,8 +26,8 @@ import p.minn.common.utils.ConstantCommon;
  * @QQ:3942986006
  *
  */
-@Controller
-@RequestMapping(value = "/logout")
+//@Controller
+//@RequestMapping(value = "/logout")
 public class LogoutController {
 	
 	private static final String DEFAULT_IDX="index";

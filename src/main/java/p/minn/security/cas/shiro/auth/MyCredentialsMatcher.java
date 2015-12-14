@@ -1,4 +1,4 @@
-package p.minn.cas.shiro.auth;
+package p.minn.security.cas.shiro.auth;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

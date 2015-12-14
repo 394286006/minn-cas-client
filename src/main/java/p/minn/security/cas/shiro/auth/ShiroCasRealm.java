@@ -1,4 +1,4 @@
-package p.minn.cas.shiro.auth;
+package p.minn.security.cas.shiro.auth;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -13,9 +13,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import p.minn.cas.service.IAccountService;
 import p.minn.common.utils.ConstantCommon;
 import p.minn.privilege.entity.User;
+import p.minn.security.service.IAccountService;
 
 /**
  * 

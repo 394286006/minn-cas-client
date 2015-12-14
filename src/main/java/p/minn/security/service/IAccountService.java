@@ -1,4 +1,4 @@
-package p.minn.cas.service;
+package p.minn.security.service;
 
 
 import java.util.List;
@@ -19,5 +19,7 @@ public interface IAccountService {
 
 	public String getCurrentUserName() ;
 	
-	public List<String> getRoleListByUserId(Integer id);
+	public List<String> getRoleListByUserId(Integer userid);
+	
+	public List<String> getRoleRealmListByUserId(Integer userid);
 }

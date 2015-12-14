@@ -14,7 +14,7 @@
 
 	<description>Shiro cas config</description>
 	 <context:property-placeholder ignore-unresolvable="true" location="classpath*:/spring/application.cas.properties" />
-	<context:component-scan base-package="p.minn.cas.shiro.auth" />
+	<context:component-scan base-package="p.minn.security.cas.shiro.auth" />
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="shiroCasRealm" />
 		<property name="subjectFactory" ref="casSubjectFactory" />

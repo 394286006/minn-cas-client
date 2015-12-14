@@ -1,4 +1,4 @@
-package p.minn.cas.shiro.auth;
+package p.minn.security.cas.shiro.auth;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;

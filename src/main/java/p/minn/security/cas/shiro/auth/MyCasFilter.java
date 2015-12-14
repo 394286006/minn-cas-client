@@ -1,4 +1,4 @@
-package p.minn.cas.shiro.auth;
+package p.minn.security.cas.shiro.auth;
 
 
 import javax.servlet.ServletRequest;
@@ -9,6 +9,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.cas.CasFilter;
 import org.apache.shiro.cas.CasToken;
 import org.apache.shiro.subject.Subject;
+import org.jasig.cas.client.util.AbstractCasFilter;
 import org.jasig.cas.client.validation.Assertion;
 
 /**
@@ -34,7 +35,7 @@ public class MyCasFilter extends CasFilter {
 	        try {
                  Subject subject = getSubject(request, response);
              	 CasToken castoken=(CasToken) token;
-            	 Object object = subject.getSession().getAttribute("_const_cas_assertion_");
+            	 Object object = subject.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
             	 if(object==null){
             		 throw new AuthenticationException("not validate!");
             	 }
