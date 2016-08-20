@@ -3,8 +3,10 @@ package p.minn.security.service;
 
 import java.util.List;
 
-
-import p.minn.privilege.entity.User;
+import p.minn.common.utils.Page;
+import p.minn.privilege.entity.Account;
+import p.minn.privilege.entity.IdEntity;
+import p.minn.security.cas.springsecurity.auth.User;
 
 /**
  * 
@@ -15,11 +17,25 @@ import p.minn.privilege.entity.User;
 
 public interface IAccountService {
 
-	public User findUserByLoginName(String loginName);
+	public Account findAccountByLoginName(String loginName);
+	
+	public Account findAccountByLoginName(String loginName,String password);
+	
+	public String getCurrentAccountName() ;
+	
+	public List<String> getRoleListByAccountId(Integer accountid);
+	
+	public List<String> getRoleRealmListByAccountId(Integer accountid);
 
-	public String getCurrentUserName() ;
-	
-	public List<String> getRoleListByUserId(Integer userid);
-	
-	public List<String> getRoleRealmListByUserId(Integer userid);
+	public Object getAccountRole(String lang, String messageBody) throws Exception;
+
+	public Page query(String messageBody, String lang);
+
+	public void update(User user,String messageBody, String lang);
+
+	public void save(User user,String messageBody, String lang);
+
+	public void delete(String messageBody);
+
+	public void saveAccountRole(String messageBody);
 }

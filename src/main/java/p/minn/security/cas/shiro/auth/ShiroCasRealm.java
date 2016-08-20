@@ -14,7 +14,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import p.minn.common.utils.ConstantCommon;
-import p.minn.privilege.entity.User;
+import p.minn.privilege.entity.Account;
 import p.minn.security.service.IAccountService;
 
 /**
@@ -35,7 +35,7 @@ public class ShiroCasRealm extends CasRealm {
 		if (ct.getPrincipal() == null) {
 			return null;
 		}
-		User user = accountService.findUserByLoginName(ct.getPrincipal()
+		Account user = accountService.findAccountByLoginName(ct.getPrincipal()
 				.toString());
 		if (user != null) {
 			Subject cuser = SecurityUtils.getSubject();
@@ -57,11 +57,11 @@ public class ShiroCasRealm extends CasRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		CasToken ct = (CasToken) principals.getPrimaryPrincipal();
-		User user = accountService.findUserByLoginName(ct.getPrincipal()
+		Account user = accountService.findAccountByLoginName(ct.getPrincipal()
 				.toString());
 		SimpleAuthorizationInfo info = (SimpleAuthorizationInfo) ct
 				.getPrincipal();
-		info.addRoles(accountService.getRoleListByUserId(user.getId()));
+		info.addRoles(accountService.getRoleListByAccountId(user.getId()));
 		return info;
 	}
 

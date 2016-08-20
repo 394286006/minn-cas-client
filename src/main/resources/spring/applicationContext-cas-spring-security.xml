@@ -12,13 +12,14 @@
 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-		http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd"
 	default-lazy-init="true">
 
 	<description>spring security cas config</description>
+	 <import  resource="classpath*:spring/applicationContext-oauth2-spring-security.xml"/>
 	 <context:property-placeholder ignore-unresolvable="true" location="classpath*:/spring/application.cas.properties" />
-	<context:component-scan base-package="p.minn.security.cas.springsecurity.auth,p.minn.security.auth,p.minn.security.service" />
+	<context:component-scan base-package="p.minn.security.cas.springsecurity.auth,p.minn.security.auth,p.minn.security.service,p.minn.security.oauth" />
 	 
 	  <sec:http entry-point-ref="casEntryPoint" use-expressions="true">
 	      <sec:headers>
@@ -35,6 +36,11 @@
 
 	<sec:authentication-manager  alias="authManager">
 	  <sec:authentication-provider  ref="casAuthProvider">
+	  </sec:authentication-provider>
+	  <sec:authentication-provider>
+	    <sec:jdbc-user-service data-source-ref="privilegedataSource"
+				users-by-username-query="select name as username, pwd as password, 1 from user where name = ?"
+				authorities-by-username-query="select u.name as username,r.code as role from user u,role as r,user_role ur where u.id=ur.user_id and ur.role_id=r.id and u.name=?" />
 	  </sec:authentication-provider>
 	</sec:authentication-manager>
 	<alias name="securityDbRealm" alias="userDbService"/>

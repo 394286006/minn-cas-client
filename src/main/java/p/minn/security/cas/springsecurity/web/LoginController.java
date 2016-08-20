@@ -24,7 +24,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import p.minn.common.utils.ConstantCommon;
-import p.minn.privilege.entity.User;
+import p.minn.privilege.entity.Account;
 import p.minn.security.service.IAccountService;
 
 
@@ -63,7 +63,7 @@ public class LoginController {
 			
 		}
 		if(!userName.equals(ConstantCommon.ANONYMOUSUSER)){
-			User user=accountService.findUserByLoginName(userName);
+			Account user=accountService.findAccountByLoginName(userName);
 			req.getSession().setAttribute(ConstantCommon.LOGINUSER,user);
 		}
 		return model;

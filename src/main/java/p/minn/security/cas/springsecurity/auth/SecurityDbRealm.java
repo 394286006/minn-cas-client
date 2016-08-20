@@ -30,8 +30,9 @@ public class SecurityDbRealm implements UserDetailsService {
 	public UserDetails loadUserByUsername(String loginName)
 			throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		p.minn.privilege.entity.User user=accountService.findUserByLoginName(loginName);
-		List<String> roles=accountService.getRoleRealmListByUserId(user.getId());
+		
+		p.minn.privilege.entity.Account user=accountService.findAccountByLoginName(loginName);
+		List<String> roles=accountService.getRoleRealmListByAccountId(user.getId());
 		List<GrantedAuthority> gas=getGrantedAuthorities(roles);
 		User realmuser=new User(user.getName(),user.getPwd(),true,true,true,true,gas);
 		return realmuser;
