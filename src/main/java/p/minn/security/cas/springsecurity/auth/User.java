@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import p.minn.privilege.entity.Department;
 import p.minn.vo.MyUserDetails;
 /**
  * 
@@ -15,11 +16,19 @@ import p.minn.vo.MyUserDetails;
  */
 public class User extends MyUserDetails  implements UserDetails{
 
-	List<GrantedAuthority> authorities;
+	private List<GrantedAuthority> authorities;
 	
-	public User(Integer id,String username,String pwd,Integer type,List<String> roles,List<GrantedAuthority> authorities) {
-		super(id,username,pwd,type,roles);
+	private List<Department> departments;
+	
+	public User(String username,String pwd) {
+      super(username,pwd);
+      
+  }
+	
+	public User(Integer id,String username,String pwd,String language,Integer type,List<String> roles,List<GrantedAuthority> authorities,List<Department> departments) {
+		super(id,username,pwd,language,type,roles);
 		this.authorities=authorities;
+		this.departments=departments;
 		
 	}
 
@@ -57,6 +66,16 @@ public class User extends MyUserDetails  implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+  public List<Department> getDepartments() {
+    return departments;
+  }
+
+  public void setDepartments(List<Department> departments) {
+    this.departments = departments;
+  }
+	
+	
 
 
 }

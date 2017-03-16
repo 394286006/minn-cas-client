@@ -5,6 +5,7 @@ import java.util.List;
 
 import p.minn.common.utils.Page;
 import p.minn.privilege.entity.Account;
+import p.minn.privilege.entity.Department;
 import p.minn.privilege.entity.IdEntity;
 import p.minn.security.cas.springsecurity.auth.User;
 
@@ -20,6 +21,12 @@ public interface IAccountService {
 	public Account findAccountByLoginName(String loginName);
 	
 	public Account findAccountByLoginName(String loginName,String password);
+	
+	public Account findAccountByRandomKey(String randomKey);
+	
+	public boolean checkQrCodeByRandomKey(String randomKey);
+	
+	public void updateKey(String name, String randomKey);
 	
 	public String getCurrentAccountName() ;
 	
@@ -38,4 +45,6 @@ public interface IAccountService {
 	public void delete(String messageBody);
 
 	public void saveAccountRole(String messageBody);
+
+    public List<Department> getDepartmentByAcountId(Integer accountid);
 }

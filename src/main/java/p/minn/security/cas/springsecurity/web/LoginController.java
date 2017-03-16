@@ -51,7 +51,6 @@ public class LoginController {
 		localeResolver.setLocale(req, rep, local);
 		ModelAndView model = new ModelAndView();
 		model.setViewName(DEFAULT_IDX);
-	
 		String userName = null;
 		UserDetails ud=null;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

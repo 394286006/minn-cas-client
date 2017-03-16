@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import p.minn.privilege.entity.Account;
+import p.minn.privilege.entity.Department;
 import p.minn.security.service.IAccountService;
 /**
  * 
@@ -36,15 +37,36 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
 		// TODO Auto-generated method stub
+	
 		String name = authentication.getName();
         String password = authentication.getCredentials().toString();
-        Account ud=  accountService.findAccountByLoginName(name);
-        if(ud.getPwd().equals(passwordEncoder.encode(password))){
-        	List<String> roles=accountService.getRoleRealmListByAccountId(ud.getId());
-        	List<GrantedAuthority> gas=getGrantedAuthorities(roles);
-        	return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,ud.getType(),roles,gas), password, gas);
-        } else {
-            throw new AuthenticationException("Unable to auth against third party systems"){};
+        MyAuthenticationDetails details=(MyAuthenticationDetails) authentication.getDetails();
+        Account ud=null;
+        if(details.getLoginType()==LoginType.PWD){
+          ud=  accountService.findAccountByLoginName(name);
+          if(ud.getPwd().equals(passwordEncoder.encode(password))){
+          	List<String> roles=accountService.getRoleRealmListByAccountId(ud.getId());
+          	List<GrantedAuthority> gas=getGrantedAuthorities(roles);
+          	List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
+          	return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments), password, gas);
+          } else {
+              throw new AuthenticationException("Unable to auth aainst third party systems"){};
+          }
+        }else if(details.getLoginType()==LoginType.QRCODE){
+            ud=  accountService.findAccountByRandomKey(details.getKey());
+          if(ud!=null){
+            List<String> roles=accountService.getRoleRealmListByAccountId(ud.getId());
+            List<GrantedAuthority> gas=getGrantedAuthorities(roles);
+            List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
+            accountService.updateKey(ud.getName(), "");
+            String key=ud.getRandomKey();
+            int idx=key.indexOf("_");
+            return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,key.substring(idx+1,key.length()),ud.getType(),roles,gas,deptments), password, gas);
+          }else{
+            throw new AuthenticationException("Unable to auth aainst third party systems"){};
+          }
+        }else{
+          throw new AuthenticationException("Undefined loginType[pwd|qrcode]:"+details.getLoginType()){};
         }
 	}
 
