@@ -3,6 +3,8 @@ package p.minn.security.cas.springsecurity.auth;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+
+import p.minn.common.type.LoginType;
 /**
  * 
  * @author minn

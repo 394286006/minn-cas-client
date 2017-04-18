@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import p.minn.common.type.LoginType;
 import p.minn.privilege.entity.Account;
 import p.minn.privilege.entity.Department;
 import p.minn.security.service.IAccountService;
@@ -65,7 +66,17 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
           }else{
             throw new AuthenticationException("Unable to auth aainst third party systems"){};
           }
-        }else{
+        }else if(details.getLoginType()==LoginType.THIRDPART){
+          ud=  accountService.findAccountByThirdPart(name,details.getKey());
+          if(ud!=null){
+            List<String> roles=accountService.getRoleRealmListByAccountId(ud.getId());
+            List<GrantedAuthority> gas=getGrantedAuthorities(roles);
+            List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
+            return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments), password, gas);
+          }else{
+            throw new AuthenticationException("Unable to auth aainst third party systems"){};
+          }
+        } else{
           throw new AuthenticationException("Undefined loginType[pwd|qrcode]:"+details.getLoginType()){};
         }
 	}

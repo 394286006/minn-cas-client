@@ -24,6 +24,8 @@ public interface IAccountService {
 	
 	public Account findAccountByRandomKey(String randomKey);
 	
+	public Account findAccountByThirdPart(String name,String secretkey);
+	
 	public boolean checkQrCodeByRandomKey(String randomKey);
 	
 	public void updateKey(String name, String randomKey);
