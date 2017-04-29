@@ -9,6 +9,7 @@
 		<groupId>p.minn</groupId>
 		<artifactId>minn-parent</artifactId>
 		<version>0.0.1</version>
+		<relativePath>../minn-parent</relativePath>
 	</parent>
 
 	<dependencies>
@@ -40,4 +41,8 @@
 		</dependency>
 
 	</dependencies>
+	<organization>
+		<name>minn</name>
+		<url>http://fmfl.iteye.com</url>
+	</organization>
 </project>
