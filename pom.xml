@@ -3,12 +3,12 @@
 	<!-- @author: minn @QQ:3942986006 -->
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>minn-cas-client</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<name>minn-cas-client</name>
 	<parent>
 		<groupId>p.minn</groupId>
 		<artifactId>minn-parent</artifactId>
-		<version>0.0.1</version>
+		<version>1.0.0</version>
 		<relativePath>../minn-parent</relativePath>
 	</parent>
 
@@ -16,28 +16,22 @@
 		<dependency>
 			<groupId>p.minn</groupId>
 			<artifactId>minn-common</artifactId>
-			<version>0.0.1</version>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>p.minn</groupId>
+			<artifactId>minn-oauth</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>p.minn</groupId>
 			<artifactId>minn-pojo</artifactId>
-			<version>0.0.1</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-cas</artifactId>
 			<version>${shiro.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-cas</artifactId>
-			<version>${spring-security-cas.version}</version>
 		</dependency>
 
 	</dependencies>

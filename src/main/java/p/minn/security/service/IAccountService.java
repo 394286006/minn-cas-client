@@ -4,10 +4,9 @@ package p.minn.security.service;
 import java.util.List;
 
 import p.minn.common.utils.Page;
+import p.minn.oauth.vo.User;
 import p.minn.privilege.entity.Account;
 import p.minn.privilege.entity.Department;
-import p.minn.privilege.entity.IdEntity;
-import p.minn.security.cas.springsecurity.auth.User;
 
 /**
  * 

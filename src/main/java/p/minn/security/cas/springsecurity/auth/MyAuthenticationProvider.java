@@ -2,6 +2,7 @@ package p.minn.security.cas.springsecurity.auth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,13 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import p.minn.common.type.LoginType;
+import p.minn.oauth.service.MyAuthService;
+import p.minn.oauth.vo.User;
 import p.minn.privilege.entity.Account;
 import p.minn.privilege.entity.Department;
 import p.minn.security.service.IAccountService;
@@ -34,6 +34,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private MyAuthService myAuthService;
 	
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
@@ -49,7 +52,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
           	List<String> roles=accountService.getRoleRealmListByAccountId(ud.getId());
           	List<GrantedAuthority> gas=getGrantedAuthorities(roles);
           	List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
-          	return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments), password, gas);
+          	User user=new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments);
+          	myAuthService.auth(user);
+          	return new UsernamePasswordAuthenticationToken(user, password, gas);
           } else {
               throw new AuthenticationException("Unable to auth aainst third party systems"){};
           }
@@ -62,7 +67,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
             accountService.updateKey(ud.getName(), "");
             String key=ud.getRandomKey();
             int idx=key.indexOf("_");
-            return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,key.substring(idx+1,key.length()),ud.getType(),roles,gas,deptments), password, gas);
+            User user=new User(ud.getId(),ud.getName(),password,key.substring(idx+1,key.length()),ud.getType(),roles,gas,deptments);
+        	    myAuthService.auth(user);
+            return new UsernamePasswordAuthenticationToken(user, password, gas);
           }else{
             throw new AuthenticationException("Unable to auth aainst third party systems"){};
           }
@@ -72,7 +79,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
             List<String> roles=accountService.getRoleRealmListByAccountId(ud.getId());
             List<GrantedAuthority> gas=getGrantedAuthorities(roles);
             List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
-            return new UsernamePasswordAuthenticationToken(new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments), password, gas);
+            User user=new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments);
+            myAuthService.auth(user);
+            return new UsernamePasswordAuthenticationToken(user, password, gas);
           }else{
             throw new AuthenticationException("Unable to auth aainst third party systems"){};
           }
