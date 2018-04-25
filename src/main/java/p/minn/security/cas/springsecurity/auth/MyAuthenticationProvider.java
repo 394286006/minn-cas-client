@@ -14,12 +14,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import p.minn.auth.entity.Account;
+import p.minn.auth.entity.Department;
 import p.minn.common.type.LoginType;
-import p.minn.oauth.service.MyAuthService;
-import p.minn.oauth.vo.User;
-import p.minn.privilege.entity.Account;
-import p.minn.privilege.entity.Department;
+import p.minn.security.cas.springsecurity.jwt.MyJwtAuthService;
 import p.minn.security.service.IAccountService;
+import p.minn.vo.User;
 /**
  * 
  * @author minn
@@ -36,7 +36,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     private PasswordEncoder passwordEncoder;
     
     @Autowired
-    private MyAuthService myAuthService;
+    private MyJwtAuthService myJwtAuthService;
 	
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
@@ -53,7 +53,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
           	List<GrantedAuthority> gas=getGrantedAuthorities(roles);
           	List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
           	User user=new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments);
-          	myAuthService.auth(user);
+          	myJwtAuthService.auth(user);
           	return new UsernamePasswordAuthenticationToken(user, password, gas);
           } else {
               throw new AuthenticationException("Unable to auth aainst third party systems"){};
@@ -68,7 +68,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
             String key=ud.getRandomKey();
             int idx=key.indexOf("_");
             User user=new User(ud.getId(),ud.getName(),password,key.substring(idx+1,key.length()),ud.getType(),roles,gas,deptments);
-        	    myAuthService.auth(user);
+        	    myJwtAuthService.auth(user);
             return new UsernamePasswordAuthenticationToken(user, password, gas);
           }else{
             throw new AuthenticationException("Unable to auth aainst third party systems"){};
@@ -80,7 +80,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
             List<GrantedAuthority> gas=getGrantedAuthorities(roles);
             List<Department> deptments=accountService.getDepartmentByAcountId(ud.getId());
             User user=new User(ud.getId(),ud.getName(),password,details.getLanguage(),ud.getType(),roles,gas,deptments);
-            myAuthService.auth(user);
+            myJwtAuthService.auth(user);
             return new UsernamePasswordAuthenticationToken(user, password, gas);
           }else{
             throw new AuthenticationException("Unable to auth aainst third party systems"){};

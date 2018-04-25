@@ -3,11 +3,10 @@ package p.minn.security.service;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import p.minn.auth.entity.Account;
 import p.minn.common.utils.UtilCommon;
-import p.minn.privilege.entity.Account;
 
 
 /**

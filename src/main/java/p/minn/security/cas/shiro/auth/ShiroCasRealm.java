@@ -13,8 +13,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import p.minn.auth.entity.Account;
 import p.minn.common.utils.ConstantCommon;
-import p.minn.privilege.entity.Account;
 import p.minn.security.service.IAccountService;
 
 /**

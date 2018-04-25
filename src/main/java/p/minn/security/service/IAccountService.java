@@ -3,10 +3,10 @@ package p.minn.security.service;
 
 import java.util.List;
 
-import p.minn.common.utils.Page;
-import p.minn.oauth.vo.User;
-import p.minn.privilege.entity.Account;
-import p.minn.privilege.entity.Department;
+import p.minn.auth.entity.Account;
+import p.minn.auth.entity.Department;
+
+
 
 /**
  * 
@@ -19,7 +19,7 @@ public interface IAccountService {
 
 	public Account findAccountByLoginName(String loginName);
 	
-	public Account findAccountByLoginName(String loginName,String password);
+	//public Account findAccountByLoginName(String loginName,String password);
 	
 	public Account findAccountByRandomKey(String randomKey);
 	
@@ -36,16 +36,6 @@ public interface IAccountService {
 	public List<String> getRoleRealmListByAccountId(Integer accountid);
 
 	public Object getAccountRole(String lang, String messageBody) throws Exception;
-
-	public Page query(String messageBody, String lang);
-
-	public void update(User user,String messageBody, String lang);
-
-	public void save(User user,String messageBody, String lang);
-
-	public void delete(String messageBody);
-
-	public void saveAccountRole(String messageBody);
 
     public List<Department> getDepartmentByAcountId(Integer accountid);
 }

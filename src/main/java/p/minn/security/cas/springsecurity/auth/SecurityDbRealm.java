@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import p.minn.auth.entity.Account;
 import p.minn.security.service.IAccountService;
+
 
 /**
  * 
@@ -31,7 +33,7 @@ public class SecurityDbRealm implements UserDetailsService {
 			throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		
-		p.minn.privilege.entity.Account user=accountService.findAccountByLoginName(loginName);
+		Account user=accountService.findAccountByLoginName(loginName);
 		List<String> roles=accountService.getRoleRealmListByAccountId(user.getId());
 		List<GrantedAuthority> gas=getGrantedAuthorities(roles);
 		User realmuser=new User(user.getName(),user.getPwd(),true,true,true,true,gas);
